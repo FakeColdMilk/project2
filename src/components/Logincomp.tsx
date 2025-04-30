@@ -1,4 +1,13 @@
+"use client"
+import { authClient } from "@/lib/auth-client";
+
+
 export default function Example() {
+  const handleSignIn = async () => {
+    console.log("signing in");
+    const data = await authClient.signIn.social({ provider: "github", callbackURL: "http://localhost:3000/games" });
+    console.log(data);
+  }
     return (
       <>
         {/*
@@ -13,11 +22,7 @@ export default function Example() {
           <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div className="mx-auto w-full max-w-sm lg:w-96">
               <div>
-                <img
-                  alt="Your Company"
-                  src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                  className="h-10 w-auto"
-                />
+               
                 <h2 className="mt-8 text-2xl/9 font-bold tracking-tight text-white-900">Sign in to your account</h2>
                 <p className="mt-2 text-sm/6 text-gray-500">
                   
@@ -111,6 +116,7 @@ export default function Example() {
                     </a>
   
                     <a
+                    onClick={handleSignIn}
                       href="#"
                       className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:ring-transparent"
                     >
@@ -131,7 +137,7 @@ export default function Example() {
           <div className="relative hidden w-0 flex-1 lg:block">
             <img
               alt=""
-              src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
+              src="https://imgs.search.brave.com/jjHOWkXkfS2MiHhktlsN6ltxhC4c-ZbYkraM6rAJEsA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvODU2/NDU1MjMwL3Bob3Rv/L3NlbGZpZS1jYXRz/LmpwZz9zPTYxMng2/MTImdz0wJms9MjAm/Yz03eFdVNEJGajln/ZFlKU1puM2phM2Jp/alNlRUFXREh4N1BZ/NHFMakcyYnNrPQ"
               className="absolute inset-0 size-full object-cover"
             />
           </div>
