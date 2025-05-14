@@ -5,6 +5,15 @@ import React, { useEffect, useState } from 'react'
 export default function Example() {
   const [games, setGames] = useState([])
 
+  const [title, setTitle] = useState("")
+
+  const [description, setDescription] = useState("")
+  const [published, setPublished] = useState("")
+  const [owned, setOwned] = useState("")
+  const [image, setImage] = useState("")
+  const [price, setPrice] = useState("")
+
+
   const fetchData = async () => {
     const res = await fetch('/api/games')
     const data = await res.json()
@@ -15,6 +24,28 @@ export default function Example() {
   useEffect(() => {
     fetchData()
   }, [])
+
+  const addTodo = async (e:React.SyntheticEvent)=>{
+    e.preventDefault()
+    const res = await fetch('/api/games', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({title, description, published, owned, image, price})
+    })
+    const data = await res.json()
+    console.log('data', data)
+    setTitle('')
+    setDescription('')
+    setPublished('')
+    setOwned('')
+    setImage('')
+    setPrice('')
+
+    fetchData()
+  }
+
 
   return (
     <div className="bg-white">
@@ -45,7 +76,18 @@ export default function Example() {
               </div>
             </div>
           ))}
+
         </div>
+        <form className='border-2 border-amber-950 p-10' onSubmit={addTodo}>
+            <input type="text" name="title" onChange={({target})=>setTitle(target.value)} placeholder='Title' />
+            <input type="text" name="desc" onChange={({target})=>setDescription(target.value)} placeholder='Description' />
+            <input type="text" name="published" onChange={({target})=>setPublished(target.value)} placeholder='published' />
+            <input type="text" name="owned" onChange={({target})=>setOwned(target.value)} placeholder='owned' />
+            <input type="text" name="price" onChange={({target})=>setPrice(target.value)} placeholder='price' />
+            <input type="text" name="image" onChange={({target})=>setImage(target.value)} placeholder='image' />
+            <button className='p-5 bg-green-700 text-amber-50' type='submit'>Add Todo</button>
+        </form>
+
       </div>
     </div>
   )
